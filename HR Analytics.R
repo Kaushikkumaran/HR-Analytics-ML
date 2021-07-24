@@ -107,12 +107,15 @@ confusionMatrix(factor(predicted_class), factor(test$target1))
 imp_features_for_the_model <- c('city','company_size','experience','education_level',
                                 'company_type','last_new_job')
 formula_for_model = as.formula(paste("target ~ ", paste(imp_features_for_the_model, collapse= "+")))
-boost.HR = gbm(formula_for_model ,data=train, 
-               distribution="bernoulli",n.trees =1000 ,shrinkage = 0.01,
-               interaction.depth =4)
-summary(boost.HR)
-yhat.boost=predict(boost.HR ,newdata =test,
-                   n.trees =1000, type = "response")
+#boost.HR = gbm(formula_for_model ,data=train, 
+#               distribution="bernoulli",n.trees =1000 ,shrinkage = 0.01,
+#               interaction.depth =4)
+boost_HR_cv = gbm(formula_for_model, data=train, 
+                  distribution="bernoulli",n.trees =5000 ,shrinkage = 0.001,
+                  interaction.depth =3, cv.folds = 10)
+summary(boost_HR_cv)
+yhat.boost=predict(boost_HR_cv ,newdata =test,
+                   n.trees =5000, type = "response")
 predicted_class <- yhat.boost > 0.45
 a <- table(predicted_class, test$target)
 a
@@ -120,3 +123,39 @@ test <- test %>%
   mutate(target1 = ifelse(target == 0,FALSE,TRUE))
 confusionMatrix(factor(predicted_class), factor(test$target1))
 
+#Ridge
+grid =10^ seq (10,-2, length =100)
+x <-model.matrix(formula_for_model,HR_Data)
+y <- HR_Data$target
+set.seed (1)
+train=sample (1: nrow(x), nrow(x)/1.3333)
+test=(-train )
+y.test=y[test]
+ridge.mod =glmnet(x[train ,],y[train],alpha =0, lambda =grid ,
+                  thresh =1e-12, family = 'binomial')
+set.seed(1)
+cv_ridge_model =cv.glmnet(x[train,],y[train],alpha =0,family = 'binomial')
+plot(cv_ridge_model)
+bestlam =cv_ridge_model$lambda.min
+bestlam #0.0172
+ridge.pred=predict (ridge.mod ,s=bestlam ,newx=x[test ,],type = 'response')
+predicted_class <- ridge.pred > 0.45
+a <- table(predicted_class, y.test)
+a
+predicted_class_mod <- ifelse(predicted_class == FALSE,0,1)
+confusionMatrix(factor(predicted_class_mod), factor(y.test))
+
+
+# Lasso
+lasso.mod =glmnet (x[train ,],y[train],alpha =1, lambda =grid)
+set.seed(1)
+cv_lasso_model =cv.glmnet(x,y,alpha =1)
+plot(cv_lasso_model)
+bestlam =cv_lasso_model$lambda.min
+bestlam 
+lasso.pred=predict (lasso.mod ,s=bestlam ,newx=x[test ,])
+predicted_class <- lasso.pred > 0.45
+a <- table(predicted_class, y.test)
+a
+predicted_class_mod <- ifelse(predicted_class == FALSE,0,1)
+confusionMatrix(factor(predicted_class_mod), factor(y.test))
