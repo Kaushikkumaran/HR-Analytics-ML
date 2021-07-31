@@ -17,7 +17,32 @@ Missing values are imputed as 'Missing' for model to learn
 Incorrect values are treated in excel before loading data
 Grouping City data – Grouped less common city ids into “others” bucket based on their proportion in data (<2.5%)  
 
-# EDA
+# Insights
+
+### 80% of targeted individuals come from 15% of total cities
+![image](https://user-images.githubusercontent.com/20616274/127086767-900729c4-5aa0-4bd9-b135-eb452fcaee24.png)
+
+### % Targeted individuals are not in the same order as % Applicants from each city
+![image](https://user-images.githubusercontent.com/20616274/127086840-fa0aeec1-8cf6-43da-a4cc-d9c341b1330b.png)
+
+### For targets with lower experience, no relevant experience is acceptable, for targets with high experience, relevant experience is preferred 
+![image](https://user-images.githubusercontent.com/20616274/127086888-d91fa613-537a-441a-89ca-9c0356a41a54.png)
+
+# Modeling Techniques
+![image](https://user-images.githubusercontent.com/20616274/127086939-5eae7d16-7a37-4ba4-964d-f85688dab998.png)
+
+### Variable Importance and Confusion Matrix
+![image](https://user-images.githubusercontent.com/20616274/127086998-d6d08628-1d22-427d-8ed2-436b63172d4c.png)
+![image](https://user-images.githubusercontent.com/20616274/127087010-38d195c4-a09e-4e71-a2d6-7bddf193688f.png)
+
+Confusion Matrix:
+![image](https://user-images.githubusercontent.com/20616274/127087078-25f7d10e-829f-4286-920f-2f426b58ba40.png)
+
+# Business Impact
+![image](https://user-images.githubusercontent.com/20616274/127087141-d1b8869d-9705-4279-874e-210d80918c2e.png)
+
+
+# Detailed EDA
 ## Univariate Analysis
 
 ### Target Dependent Variable
@@ -53,30 +78,6 @@ Grouping City data – Grouped less common city ids into “others” bucket bas
 
 ### Correlation plot for the numeric columns
 ![image](https://user-images.githubusercontent.com/20616274/126242188-91ac3de9-43ee-4d14-904b-538418144928.png)
-
-# Insights
-
-### 80% of targeted individuals come from 15% of total cities
-![image](https://user-images.githubusercontent.com/20616274/127086767-900729c4-5aa0-4bd9-b135-eb452fcaee24.png)
-
-### % Targeted individuals are not in the same order as % Applicants from each city
-![image](https://user-images.githubusercontent.com/20616274/127086840-fa0aeec1-8cf6-43da-a4cc-d9c341b1330b.png)
-
-### For targets with lower experience, no relevant experience is acceptable, for targets with high experience, relevant experience is preferred 
-![image](https://user-images.githubusercontent.com/20616274/127086888-d91fa613-537a-441a-89ca-9c0356a41a54.png)
-
-# Modeling Techniques
-![image](https://user-images.githubusercontent.com/20616274/127086939-5eae7d16-7a37-4ba4-964d-f85688dab998.png)
-
-### Variable Importance and Confusion Matrix
-![image](https://user-images.githubusercontent.com/20616274/127086998-d6d08628-1d22-427d-8ed2-436b63172d4c.png)
-![image](https://user-images.githubusercontent.com/20616274/127087010-38d195c4-a09e-4e71-a2d6-7bddf193688f.png)
-
-Confusion Matrix:
-![image](https://user-images.githubusercontent.com/20616274/127087078-25f7d10e-829f-4286-920f-2f426b58ba40.png)
-
-# Business Impact
-![image](https://user-images.githubusercontent.com/20616274/127087141-d1b8869d-9705-4279-874e-210d80918c2e.png)
 
 
 
